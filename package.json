@@ -1,0 +1,33 @@
+{
+  "name": "servidor-inventario",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "cross-env DATABASE_URL=\"postgresql://postgres:Joseangel18092001%40@db.rvzbwykqbwearrvevmsk.supabase.co:5432/postgres\" nodemon index.js",
+    "db:push": "cross-env DATABASE_URL=\"postgresql://postgres:Joseangel18092001%40@db.rvzbwykqbwearrvevmsk.supabase.co:5432/postgres\" prisma db push",
+    "db:generate": "cross-env DATABASE_URL=\"postgresql://postgres:Joseangel18092001%40@db.rvzbwykqbwearrvevmsk.supabase.co:5432/postgres\" prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "nodemon": "^3.1.14",
+    "prisma": "^5.22.0"
+  },
+  "allowScripts": {
+    "prisma": true,
+    "@prisma/client": true,
+    "@prisma/engines": true
+  }
+}

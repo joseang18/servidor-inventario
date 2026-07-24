@@ -1,0 +1,74 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model TipoProducto {
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique
+  productos Producto[]
+  codigo    String
+}
+
+model Categoria {
+  id            Int            @id @default(autoincrement())
+  nombre        String
+  codigo        String         @unique // Ej: "HOG" para Hogar
+  subcategorias Subcategoria[]
+  productos     Producto[]
+}
+
+model Subcategoria {
+  id          Int        @id @default(autoincrement())
+  nombre      String
+  codigo      String     // Ej: "COC" para Cocina
+  categoriaId Int
+  categoria   Categoria  @relation(fields: [categoriaId], references: [id])
+  productos   Producto[]
+}
+
+model Proveedor {
+  id                 Int       @id @default(autoincrement())
+  nombre             String
+  nit                String    @unique
+  contacto           String?
+  porcentajeUtilidad Float     @default(35)
+  porcentajeMayor    Float     @default(20)
+  comentario         String?
+  productos          Producto[] // <--- Agrega esta línea para completar la relación inversa
+  createdAt          DateTime  @default(now())
+}
+
+model CorrelativoSKU {
+  id          Int    @id @default(autoincrement())
+  clave       String @unique // Combinación única ej: "HOG-COC-42"
+  ultimoNumero Int   @default(0)
+}
+
+model Producto {
+  id                  Int           @id @default(autoincrement())
+  nombre              String
+  sku                 String        @unique
+  tipoProductoId      Int?
+  tipoProducto        TipoProducto? @relation(fields: [tipoProductoId], references: [id])
+  categoriaId         Int
+  categoria           Categoria     @relation(fields: [categoriaId], references: [id])
+  subcategoriaId      Int?
+  subcategoria        Subcategoria? @relation(fields: [subcategoriaId], references: [id])
+  atributo            String?
+  proveedorId         Int
+  proveedor           Proveedor     @relation(fields: [proveedorId], references: [id])
+  costoBase           Float
+  flete               Float         @default(0)
+  porcentajeDescuento Float         @default(0)   // <--- Asegúrate de que se llame así
+  porcentajeIva       Float         @default(19)  // <--- Asegúrate de que se llame así
+  costoTotal          Float
+  precioDetal         Float
+  precioMayor         Float
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
