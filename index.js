@@ -3,7 +3,7 @@ import cors from 'cors';
 import router from './routers/productoRouter.js'; // Ajusta la ruta si tu router está en otra carpeta
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000;
 
 // Configuración de CORS para permitir peticiones del cliente
 app.use(cors({
